@@ -39,7 +39,19 @@ def write_to_file(file_name: str, line: str) -> None:
 
 def get_product_from_list(file_name: str, product_name: Optional[str], link: str, id: str, date: str,
                           remaining_offers: bool = False) -> None:
-    product_page = requests.get(link, timeout=50)
+    try:
+        product_page = requests.get(link, timeout=10)
+    except:
+        count = 0
+        try:
+            if count < 3:
+                product_page = requests.get(link, timeout=10)
+                print(f"Ponowna próba wczytania indeksu {id}")
+                count+=1
+            else:
+                raise Exception(f"3 razy próbowano wczytać indeks {id} bez powodzenia")
+        except:
+            print(f"Ostatni wczytany indeks to {id}")
     product_soup = BeautifulSoup(product_page.content, 'html.parser')
     if product_name is None:
         product_name = product_soup.find('h1', class_='product-top__product-info__name').text.strip()
@@ -78,4 +90,4 @@ if __name__ == '__main__':
     change_status(filename)
     shutil.copy(filename, r'\\fssrv4new\Ekonomiczny\DZIAŁ KONTROLINGU\Marcin\CENEO')
 
-    # delete_date(filename, '12.07.2021')
+    # delete_date(filename, '21.07.2021')
