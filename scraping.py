@@ -83,11 +83,13 @@ def get_product_from_list(file_name: str, product_name: Optional[str], link: str
 
 if __name__ == '__main__':
     filename = 'Raport Ceneo.csv'
+    filename2 = r'\\fssrv4new\Ekonomiczny\DZIAŁ KONTROLINGU\Marcin\CENEO\Raport Ceneo.csv'
 
+    shutil.copy(filename2, r'C:\Users\patrnowak\PycharmProjects\tesotwy')
     print(datetime.now())
     get_list('list.txt')
     print(datetime.now())
     change_status(filename)
     shutil.copy(filename, r'\\fssrv4new\Ekonomiczny\DZIAŁ KONTROLINGU\Marcin\CENEO')
 
-    # delete_date(filename, '21.07.2021')
+    # delete_date(filename, '28.07.2021')
